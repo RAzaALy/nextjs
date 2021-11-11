@@ -3,10 +3,12 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "../styles/Home.module.css";
+import { useSession } from "next-auth/client";
 
 export default function Home() {
   const router = useRouter();
-
+  const [session, loading] = useSession();
+  console.log({ session, loading });
   const handleClick = () => {
     console.log("placing your order");
     router.push("/product");
@@ -17,6 +19,10 @@ export default function Home() {
       <Head></Head>
 
       <main className={styles.main}>
+        <h1 className={styles.title}>
+          {session ? "Welcome " + session.user.name : "Welcome"}
+        </h1>
+
         <button onClick={handleClick}>Place Order</button>
       </main>
 
